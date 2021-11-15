@@ -1,0 +1,29 @@
+<h1>Edit Article</h1>
+<%= link_to 'Go back to list', articles_path %>
+<hr>
+<%= form_with scope: :article, url: edit_article_path, local: true do |f| %>
+    
+    <p>
+        <% if @article.errors.any? %>
+            <ul>
+                <% @article.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        <% end %>
+    </p>
+
+    <p>
+        <%= f.label :name %><br/>
+        <%= f.text_field :name %>
+    </p>
+
+    <p>
+        <%= f.label :body %><br/>
+        <%= f.text_field :body %>
+    </p>
+
+    <p>
+        <%= f.submit %>
+    </p>
+<% end %>
