@@ -1,0 +1,29 @@
+<h1>New Category</h1>
+<%= link_to 'Go back to list', categories_path %>
+<hr>
+<%= form_with scope: :category, url: create_category_path, local: true do |f| %>
+    
+    <p>
+        <% if @category.errors.any? %>
+            <ul>
+                <% @category.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        <% end %>
+    </p>
+
+    <p>
+        <%= f.label :name %><br/>
+        <%= f.text_field :name %>
+    </p>
+
+    <p>
+        <%= f.label :details %><br/>
+        <%= f.text_field :details %>
+    </p>
+
+    <p>
+        <%= f.submit %>
+    </p>
+<% end %>

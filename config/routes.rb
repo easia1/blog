@@ -10,4 +10,15 @@ Rails.application.routes.draw do
   post '/articles/:id/edit' => 'articles#update', as: 'update_article'
   # Added delete route
   delete '/articles/:id' => 'articles#destroy', as: 'delete_article'
+
+  get '/categories' => 'categories#index'
+  get '/categories/new' => 'categories#new', as: 'new_category'
+  post '/categories' => 'categories#create', as: 'create_category'
+  # Added this get route for showing single category
+  get '/categories/:id' => 'categories#show', as: 'show_category'
+  # Added edit route
+  get '/categories/:id/edit' => 'categories#edit', as: 'edit_category'
+  post '/categories/:id/edit' => 'categories#update', as: 'update_category'
+  # Added delete route
+  delete '/categories/:id' => 'categories#destroy', as: 'delete_category'
 end

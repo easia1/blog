@@ -1,0 +1,26 @@
+<h1>Categories</h1>
+<hr>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <% @categories.each do |category| %>
+            <tr>
+                <td><%= category.id %> </td>
+                <td><%= category.name %> </td>
+                <td>
+                <%= link_to 'Show', show_category_path(article) %>
+                <%= link_to 'Edit', edit_category_path(article) %>
+                <%= link_to 'Delete', delete_category_path(article), method: :delete, data: { confirm: 'Are you sure?' }%></td>
+            <tr>
+        <% end %>
+    </tbody>
+</table>
+
+<%= link_to 'New Category', new_category_path %>
