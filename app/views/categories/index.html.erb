@@ -15,9 +15,9 @@
                 <td><%= category.id %> </td>
                 <td><%= category.name %> </td>
                 <td>
-                <%= link_to 'Show', show_category_path(article) %>
-                <%= link_to 'Edit', edit_category_path(article) %>
-                <%= link_to 'Delete', delete_category_path(article), method: :delete, data: { confirm: 'Are you sure?' }%></td>
+                <%= link_to 'Show', show_category_path(category) %>
+                <%= link_to 'Edit', edit_category_path(category) %>
+                <%= link_to 'Delete', delete_category_path(category), method: :delete, data: { confirm: 'Are you sure?' }%></td>
             <tr>
         <% end %>
     </tbody>
