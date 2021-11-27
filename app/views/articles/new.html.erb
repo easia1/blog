@@ -1,7 +1,7 @@
 <h1>New Article</h1>
 <%= link_to 'Go back to list', articles_path %>
 <hr>
-<%= form_with scope: :article, url: create_article_path, local: true do |f| %>
+<%= form_with scope: :article, url: articles_path, local: true do |f| %>
     
     <p>
         <% if @article.errors.any? %>
