@@ -1,0 +1,8 @@
+<h1>View Comment</h1>
+<%= link_to 'Go back to list', articles_path %>
+<hr>
+<h2>Content</h2>
+
+<p><%= @comment.body %></p>
+
+<%= link_to 'Back to article', @comment.article%>
