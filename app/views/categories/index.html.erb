@@ -1,26 +1,33 @@
-<h1>Categories</h1>
+<p id="notice"><%= notice %></p>
+<%= link_to "Logout", destroy_user_session_path, method: :delete %>
 <hr>
+<br>
+<%= link_to "Today", today_path %> | 
+<%= link_to "All Tasks", all_path %>
+<h1>Categories</h1>
+
 <table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th></th>
-        </tr>
-    </thead>
-    
-    <tbody>
-        <% @categories.each do |category| %>
-            <tr>
-                <td><%= category.id %> </td>
-                <td><%= category.name %> </td>
-                <td>
-                <%= link_to 'Show', show_category_path(category) %>
-                <%= link_to 'Edit', edit_category_path(category) %>
-                <%= link_to 'Delete', delete_category_path(category), method: :delete, data: { confirm: 'Are you sure?' }%></td>
-            <tr>
-        <% end %>
-    </tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Details</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td><%= category.details %></td>
+        <td><%= link_to 'Show', category %></td>
+        <td><%= link_to 'Edit', edit_category_path(category) %></td>
+        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
+
+<br>
 
 <%= link_to 'New Category', new_category_path %>

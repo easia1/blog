@@ -1,10 +1,14 @@
 class CategoriesController < ApplicationController
+    before_action :authenticate_user!
+    before_action :set_category, only: %i[ show edit update destroy ]
+
     def index
-        @categories = Category.all
+        @categories = Category.where(user_id: current_user.id) if user_signed_in?
+        # originally Category.all
     end
 
     def show
-        @category = Category.find(params[:id])
+        @tasks = @category.tasks
     end
 
     def new
@@ -12,42 +16,54 @@ class CategoriesController < ApplicationController
     end
 
     def create
-        @category = Category.new
-        @category.name = params[:name]
-        @category.details = params[:details]
+        # @category = Category.new
+        # @category.name = params[:name]
+        # @category.details = params[:details]
         @category = Category.new(category_params)
+        @category.update(user_id: current_user.id)
 
-        if @category.save
-            redirect_to categories_path
-        else
-            render :new
+        respond_to do |format|
+            if @category.save
+                format.html { redirect_to @category, notice: "Category was successfully created." }
+                format.json { render :show, status: :created, location: @category }
+            else
+                format.html { render :new, status: :unprocessable_entity }
+                format.json { render json: @category.errors, status: :unprocessable_entity }
+            end
         end
     end
 
     def edit
-        @category = Category.find(params[:id])
     end
 
     def update
-        @category = Category.find(params[:id])
-
-        if @category.update(category_params)
-            redirect_to categories_path
-        else
-            render :edit
+        respond_to do |format|
+            if @category.update(category_params)
+                format.html { redirect_to @category, notice: "Category was successfully updated." }
+                format.json { render :show, status: :ok, location: @category }
+            else
+                format.html { render :edit, status: :unprocessable_entity }
+                format.json { render json: @category.errors, status: :unprocessable_entity }
+            end
         end
     end
 
     def destroy
-        @category = Category.find(params[:id])
         @category.destroy
 
-        redirect_to categories_path
+        respond_to do |format|
+            format.html { redirect_to categories_url, notice: "Category was successfully destroyed." }
+            format.json { head :no_content }
+        end
     end
 
     private
 
+    def set_category
+        @category = Category.find(params[:id])
+    end
+
     def category_params
-        params.require(:category).permit(:name, :details)
+        params.require(:category).permit(:name, :details, :user_id)
     end
 end

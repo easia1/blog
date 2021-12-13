@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Category</strong>
+  <h1><%= @category.name %></h1>
+</p>
+
+<p>
+  <% if @category.details != '' %>
+    <strong>Details:</strong>
+    <%= @category.details %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %>
+
+<hr>
+<%= render 'tasks/index', tasks: @tasks %>

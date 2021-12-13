@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>All Tasks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Body</th>
+      <th>Category</th>
+      <th>Task date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+        <tr>
+            <td><%= task.name %></td>
+            <td><%= task.body %></td>
+            <td><%= Category.find_by(id: task.category_id).name %></td>
+            <td><%= task.task_date %></td>
+            <td><%= link_to 'Show', category_task_path(task.category_id, task.id) %></td>
+            <td><%= link_to 'Edit', edit_category_task_path(task.category_id, task.id) %></td>
+            <td><%= link_to 'Destroy', category_task_path(task.category_id, task.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to "Back to Categories", categories_path %>
+

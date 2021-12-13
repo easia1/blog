@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  devise_for :users
+  resources :categories do
+    resources :tasks
+  end
+  get '/today' => 'tasks#today', as: 'today'
+  get '/all' => 'tasks#all', as: 'all'
   # # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # get '/articles' => 'articles#index'
   # get '/articles/new' => 'articles#new', as: 'new_article'
@@ -15,14 +21,16 @@ Rails.application.routes.draw do
     resources :comments
   end
 
-  get '/categories' => 'categories#index'
-  get '/categories/new' => 'categories#new', as: 'new_category'
-  post '/categories' => 'categories#create', as: 'create_category'
-  # Added this get route for showing single category
-  get '/categories/:id' => 'categories#show', as: 'show_category'
-  # Added edit route
-  get '/categories/:id/edit' => 'categories#edit', as: 'edit_category'
-  post '/categories/:id/edit' => 'categories#update', as: 'update_category'
-  # Added delete route
-  delete '/categories/:id' => 'categories#destroy', as: 'delete_category'
+
+  root to: 'categories#index'
+  # get '/categories' => 'categories#index'
+  # get '/categories/new' => 'categories#new', as: 'new_category'
+  # post '/categories' => 'categories#create', as: 'create_category'
+  # # Added this get route for showing single category
+  # get '/categories/:id' => 'categories#show', as: 'show_category'
+  # # Added edit route
+  # get '/categories/:id/edit' => 'categories#edit', as: 'edit_category'
+  # post '/categories/:id/edit' => 'categories#update', as: 'update_category'
+  # # Added delete route
+  # delete '/categories/:id' => 'categories#destroy', as: 'delete_category'
 end
