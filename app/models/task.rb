@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-    validates :name, presence: true, uniqueness: { scope: [:user_id, :category_id]}
+    validates :name, presence: true
     validates :body, length: { maximum: 240 }
     validates :task_date, presence: true
 

@@ -1,14 +1,14 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: %i[ show edit update destroy ]
-  before_action :get_category, except: [:today, :all]
+  before_action :get_category, except: [:edit, :update, :today, :all, :destroy]
 
   def today
-    @tasks = Task.all
+    @tasks = Task.where(task_date: Date.today.all_day, user_id: current_user.id).order("updated_at DESC")
   end
 
   def all
-    @tasks = Task.all
+    @tasks = Task.where(user_id: current_user.id).order("updated_at DESC")
   end
 
   # GET /tasks or /tasks.json
@@ -19,15 +19,24 @@ class TasksController < ApplicationController
   # GET /tasks/1 or /tasks/1.json
   def show
     @task = Task.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /tasks/new
   def new
     @task = @category.tasks.build
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /tasks/1/edit
   def edit
+    respond_to do |format|
+      format.js
+    end
   end
 
   # POST /tasks or /tasks.json
@@ -43,10 +52,10 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to category_task_path(@category.id, @task.id), notice: "Task was successfully created." }
+        format.html { redirect_to params[:previous_request], notice: "Task was successfully created." }
         format.json { render :show, status: :created, location: @task }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to params[:previous_request], status: :unprocessable_entity, alert: "Task was not created." }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
@@ -56,10 +65,10 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to category_task_path(@category.id, @task.id), notice: "Task was successfully updated." }
+        format.html { redirect_to params[:previous_request], notice: "Task was successfully updated." }
         format.json { render :show, status: :ok, location: @task }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to params[:previous_request], status: :unprocessable_entity, alert: "Task was not updated." }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
@@ -71,8 +80,8 @@ class TasksController < ApplicationController
     @task.destroy
     respond_to do |format|
       # ayaw magredirect sa category
-      format.html { redirect_to category_path(@category), notice: "Task was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { flash[:notice] = "Task was successfully deleted." }
+      format.js 
     end
   end
 
@@ -88,6 +97,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:name, :body, :task_date, :user_id)
+      params.require(:task).permit(:name, :previous_request, :body, :task_date, :user_id)
     end
 end

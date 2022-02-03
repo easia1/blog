@@ -1,34 +1,58 @@
-<h1>All Articles</h1>
-<hr>
+<% if false %>
+    <h1>All Articles</h1>
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <th>Count</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Body</th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% ctr = 1 %>
+            <% @articles.each do |article| %>
+                <tr>
+                    <td><%= ctr %></td>
+                    <td><%= article.id %> </td>
+                    <td><%= article.name %> </td>
+                    <td><%= article.body %> </td>
+                    <td>
+                    <%= link_to 'Show', article_path(article) %>
+                    <%= link_to 'Edit', edit_article_path(article) %>
+                    <%= link_to 'Delete', article_path(article), method: :delete, data: { confirm: 'Are you sure?' }%></td>
+                <tr>
+                <% ctr += 1 %>
+            <% end %>
+        </tbody>
+    </table>
+    <p>Sample</p>
+    <p><%= @articles.inspect %></p>
+
+    <%= link_to 'New Article', new_article_path %>
+
+<% end %>
+
+<div data-controller="article-form">
+    <%= render  "form", article: @article %>
+</div>
+
 <table>
     <thead>
         <tr>
-            <th>Count</th>
             <th>ID</th>
             <th>Name</th>
             <th>Body</th>
-            <th></th>
+            <th colspan="3"></th>
         </tr>
     </thead>
-    
-    <tbody>
-        <% ctr = 1 %>
-        <% @articles.each do |article| %>
-            <tr>
-                <td><%= ctr %></td>
-                <td><%= article.id %> </td>
-                <td><%= article.name %> </td>
-                <td><%= article.body %> </td>
-                <td>
-                <%= link_to 'Show', article_path(article) %>
-                <%= link_to 'Edit', edit_article_path(article) %>
-                <%= link_to 'Delete', article_path(article), method: :delete, data: { confirm: 'Are you sure?' }%></td>
-            <tr>
-            <% ctr += 1 %>
-        <% end %>
+
+    <tbody id="articles">
+        <%= render @articles %>
     </tbody>
 </table>
-<p>Sample</p>
-<p><%= @articles.inspect %></p>
 
-<%= link_to 'New Article', new_article_path %>
+<br>

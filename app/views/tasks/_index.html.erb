@@ -18,9 +18,9 @@
         <td><%= task.name %></td>
         <td><%= task.body %></td>
         <td><%= task.task_date %></td>
-        <td><%= link_to 'Show', category_task_path(@category.id, task.id) %></td>
-        <td><%= link_to 'Edit', edit_category_task_path(@category.id, task.id) %></td>
-        <td><%= link_to 'Destroy', category_task_path(@category.id, task.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', task_path(task) %></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to 'Destroy', task_path(task), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

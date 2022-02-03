@@ -1,32 +1,45 @@
+
 <%= form_with model: [@category, @task], local: true  do |form| %>
   <% if task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
-      <ul>
-        <% @task.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div id="alert-additional-content-2" class="p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+      <div class="flex items-center">
+          <svg class="mr-2 w-5 h-5 text-red-700 dark:text-red-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+          <h3 class="text-lg font-medium text-red-700 dark:text-red-800">Error</h3>
+        </div>
+        <div class="mt-2 mb-4 text-sm text-red-700 dark:text-red-800">
+          <ul class="marker:text-red-400 list-disc pl-5">
+            <% task.errors.each do |message| %>
+              <li><%= message.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="flex">
+          <button type="button" class="text-red-700 bg-transparent border border-red-700 hover:bg-red-800 hover:text-white focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-red-800 dark:text-red-800 dark:hover:text-white" data-collapse-toggle="alert-additional-content-2" aria-label="Close">
+            Dismiss
+          </button>
+        </div>
     </div>
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.label :name, class:"block uppercase text-slate-600 text-xs font-bold after:content-['*'] after:ml-0.5 after:text-red-500"  %>
+    <%= form.text_field :name, class:"form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :body %>
-    <%= form.text_area :body %>
+  <div class="field mt-5">
+    <%= form.label :body, class:"block uppercase text-slate-600 text-xs font-bold"  %>
+    <%= form.text_area :body, class:"form-control" %>
+    <em class="text-sm text-slate-600">Maximum 240 characters</em>
   </div>
 
-  <div class="field">
-    <%= form.label :task_date %>
-    <%= form.date_select :task_date %>
+
+  <div class="field mt-5">
+    <%= form.label :task_date, class:"block uppercase text-slate-600 text-xs font-bold after:content-['*'] after:ml-0.5 after:text-red-500"  %>
+    <%= form.date_select :task_date, {:order => [:month, :day, :year]},
+    {:class => "form-control w-max inline-block pl-3 pr-7"} %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= hidden_field_tag :previous_request, request.referer %>
+  <%= form.submit class:"mt-5 btn-primary text-sm" %>
+  
 <% end %>

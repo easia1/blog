@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'User handling', type: :feature do
 
     describe 'Signup' do
-        before { visit root_path }
+        before { visit unauthenticated_root_path }
         
         it 'should show sign up page after clicking sign up' do
             within 'body' do
@@ -11,14 +11,15 @@ RSpec.describe 'User handling', type: :feature do
 
                 click_on 'Sign up'
             end
-            expect(page).to have_current_path '/users/sign_up'
+            expect(page).to have_current_path '/register'
         end
 
         context 'with valid sign up credentials' do
-            before { visit '/users/sign_up' }
+            before { visit '/register' }
 
             it 'should show categories page' do
                 within 'form' do
+                    fill_in 'user_name', with: 'Test'
                     fill_in 'user_email', with: 'test222@test.com'
                     fill_in 'user_password', with: 'test123'
                     fill_in 'user_password_confirmation', with: 'test123'
@@ -76,7 +77,7 @@ RSpec.describe 'User handling', type: :feature do
     
     
     describe 'Login' do
-        before { visit root_path }
+        before { visit unauthenticated_root_path }
 
         it 'should show log in page' do
             within 'body' do
@@ -87,7 +88,7 @@ RSpec.describe 'User handling', type: :feature do
         
 
         context 'with valid log in credentials' do
-            before { visit root_path }
+            before { visit unauthenticated_root_path }
 
             it 'should show categories page' do
                 within 'form' do
@@ -100,7 +101,7 @@ RSpec.describe 'User handling', type: :feature do
         end
 
         context 'with invalid log in credentials' do
-            before { visit root_path }
+            before { visit unauthenticated_root_path }
 
             it 'should stay in the log in page' do
                 within 'form' do

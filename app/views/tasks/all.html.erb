@@ -1,34 +1,40 @@
-<p id="notice"><%= notice %></p>
+<div class=" mx-8 md:mx-20 mt-10 pb-20">
+<h1 class="font-extrabold text-4xl mb-2 mr-3">All tasks</h1>
 
-<h1>All Tasks</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Body</th>
-      <th>Category</th>
-      <th>Task date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tasks.each do |task| %>
-        <tr>
-            <td><%= task.name %></td>
-            <td><%= task.body %></td>
-            <td><%= Category.find_by(id: task.category_id).name %></td>
-            <td><%= task.task_date %></td>
-            <td><%= link_to 'Show', category_task_path(task.category_id, task.id) %></td>
-            <td><%= link_to 'Edit', edit_category_task_path(task.category_id, task.id) %></td>
-            <td><%= link_to 'Destroy', category_task_path(task.category_id, task.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to "Back to Categories", categories_path %>
-
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-cols-max grid-flow-row gap-6 mt-7">
+<% if @tasks.any? %>
+  <% @tasks.each do |task| %>
+    <div class="deleteTask<%= task.id %> h-full max-h-fit rounded-lg shadow-xl bg-teal-100 flex flex-col overflow-hidden hover:opacity-90 active:opacity-70 transition-all duration-150 ease">
+        <div class="bg-teal-200 text-teal-600 flex items-center justify-between">
+            <div class=" px-5 py-1 overflow-hidden">
+                <p class="font-bold truncate"><%= task.category.name %></p>
+                <p class="font-light text-xs"><%= task.task_date %></p>
+            </div>
+            <div class="flex items-center h-full">
+              <%= link_to edit_task_path(task), class:"p-3 h-full text-xl flex items-center hover:bg-teal-500 hover:text-white transition-all duration-150 ease", remote: true, 'data-modal-toggle' => 'defaultModal' do %>
+                <i class='bx bxs-edit'></i>
+              <% end %>
+              <%= link_to task_path(task.id), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class:"p-3 h-full text-xl flex items-center hover:bg-red-500 hover:text-white transition-all duration-150 ease" do %>
+                <i class='bx bxs-trash'></i>
+              <% end %>
+            </div>
+        </div>
+      <%= link_to category_task_path(task.category_id, task), class:"", remote: true, 'data-modal-toggle' => 'defaultModal' do %>
+        <div class="p-5 flex flex-col content-between overflow-hidden">                            
+            <h1 class="font-extrabold text-xl mb-1 truncate"><%= task.name %></h1>
+            <p class="text-ellipsis overflow-hidden"><%= task.body %></p>                                
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <% else %>
+    <div>
+        <div>
+            <div class="shrink-0 w-80 h-40 rounded-lg p-5 border-dashed border-2 border-gray-400 flex justify-center items-center overflow-hidden">
+                <p class="font-bold text-xl mb-2 mr-3 text-gray-400 truncate ">No tasks</p>
+            </div>
+        </div>
+    </div>
+<% end %>
+</div>
+</div>

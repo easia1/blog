@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
     def index
         @articles = Article.all
+        @article = Article.new
     end
 
     def show
@@ -13,15 +14,24 @@ class ArticlesController < ApplicationController
     end
 
     def create
-        @article = Article.new
-        @article.name = params[:name]
-        @article.body = params[:body]
+        @articles = Article.all
+        #@article = Article.new
+        # @article.name = params[:name]
+        # @article.body = params[:body]
         @article = Article.new(article_params)
 
-        if @article.save
-            redirect_to articles_path
-        else
-            render :new
+        # if @article.save
+        #     redirect_to articles_path
+        # else
+        #     render :new
+        # end
+
+        respond_to do |format|
+            if @article.save
+                format.js
+            else
+                format.html { render :index }
+            end
         end
     end
 

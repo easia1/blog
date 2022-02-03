@@ -1,33 +1,42 @@
-<p id="notice"><%= notice %></p>
-<%= link_to "Logout", destroy_user_session_path, method: :delete %>
-<hr>
-<br>
-<%= link_to "Today", today_path %> | 
-<%= link_to "All Tasks", all_path %>
-<h1>Categories</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Details</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td><%= category.details %></td>
-        <td><%= link_to 'Show', category %></td>
-        <td><%= link_to 'Edit', edit_category_path(category) %></td>
-        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class=" mx-8 md:mx-20 mt-10 pb-20">
+  <div class="flex justify-between items-center">
+    <h1 class="font-extrabold text-4xl mb-2 mr-3">Categories</h1>
+    <%= link_to new_category_path, remote: true, 'data-modal-toggle' => 'defaultModal' do %> 
+      <button class="btn-primary text-sm">+ New</button>
     <% end %>
-  </tbody>
-</table>
+  </div>
 
-<br>
-
-<%= link_to 'New Category', new_category_path %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 auto-cols-max grid-flow-row gap-6 mt-7">
+  <% if @categories.any? %>
+    <% @categories.each do |category| %>
+      <div class="deleteCategory<%= category.id %> h-full max-h-fit rounded-lg shadow-xl bg-gray-100 overflow-hidden hover:opacity-90 active:opacity-70 transition-all duration-150 ease">
+          <div class="bg-gray-200 text-gray-600 flex items-center justify-between">
+              <p class="font-bold px-5 py-1 truncate"></p>
+              <div class="flex items-center">
+                <%= link_to edit_category_path(category), class:"p-3 text-xl flex items-center hover:bg-gray-500 hover:text-white transition-all duration-150 ease" do %>
+                  <i class='bx bxs-edit'></i>
+                <% end %>
+                <%= link_to category_path(category.id), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class:"p-3 text-xl flex items-center hover:bg-red-500 hover:text-white transition-all duration-150 ease" do %>
+                  <i class='bx bxs-trash'></i>
+                <% end %>
+              </div>
+          </div>
+        <%= link_to category_path(category), class:"" do %>
+          <div class="p-5 flex flex-col content-between overflow-hidden">                            
+              <h1 class="font-extrabold text-xl mb-1 truncate"><%= category.name %></h1>
+              <p class="text-ellipsis overflow-hidden"><%= category.details %></p>                                
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <div>
+        <div>
+            <div class="shrink-0 w-80 h-40 rounded-lg p-5 border-dashed border-2 border-gray-400 flex justify-center items-center overflow-hidden">
+                <p class="font-bold text-xl mb-2 mr-3 text-gray-400 truncate ">No categories</p>
+            </div>
+        </div>
+    </div>
+<% end %>
+  </div>
+</div>

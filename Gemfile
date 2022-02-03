@@ -4,7 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
+#gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
+gem "rails", "~> 7.0.0"
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
@@ -28,6 +29,13 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise'
 gem 'factory_bot_rails'
 gem 'faker'
+gem 'turbolinks_render'
+gem "sprockets-rails"
+
+gem 'jquery-rails'
+
+# For grid layout
+gem 'masonry-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -60,3 +68,5 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+
+gem "tailwindcss-rails", "~> 2.0"

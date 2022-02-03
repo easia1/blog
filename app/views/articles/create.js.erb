@@ -1,0 +1,13 @@
+// render article
+document.getElementById('articles').innerHTML += '<%= j render @article %>';
+
+// clear and focus on input
+var article_name = document.getElementById('article_name');
+article_name.value = '';
+article_name.focus();
+
+var article_body = document.getElementById('article_body');
+article_body.value = '';
+
+// clear error
+document.getElementById('article-errors').remove();

@@ -1,0 +1,136 @@
+
+<h1 class="font-light text-xl w-max my-5 ml-8 md:ml-20 mt-10">Welcome back, <%= current_user.name %>!</h1>
+
+<%= link_to today_path, class:"flex items-center w-max ml-8 md:ml-20 hover:opacity-80" do %>
+
+        <h1 class="font-extrabold text-4xl mb-2 mr-3">Today</h1>
+        <p class="font-semibold text-sky-600 text-xs border-2 border-sky-600 hover:bg-sky-600 hover:text-white bg-white rounded-full px-4 py-1"><%= @today_tasks.count %> <%= "task".pluralize(@today_tasks.count) %> • <%= Date.today.to_formatted_s(:long) %></p>
+   
+    <box-icon type='solid' name='chevron-right'></box-icon>
+<% end %>
+
+<div class="relative rounded-xl overflow-auto  z-0">
+    <div class="bg-gradient-to-r from-white w-8 md:w-20 absolute left-0 top-0 bottom-0 rounded-l-lg z-10"></div>
+    <div class="w-full flex gap-8 snap-x scroll-pl-8 md:scroll-pl-20 overflow-x-auto pt-3 pb-14 z-0">
+        <% if @today_tasks.any? %>
+            <% @today_tasks.each do |task| %>
+                <div class="deleteTask<%= task.id %> z-0 snap-start shrink-0 first:pl-8 md:first:pl-20 last:pr-[calc(100%-21.5rem)] hover:opacity-90 active:opacity-70 transition-all duration-150 ease">
+                        <div class="shrink-0 w-80 h-40 rounded-lg shadow-xl bg-sky-100 flex flex-col overflow-hidden ">
+                            <div class="bg-sky-200 text-sky-600 flex items-center justify-between">
+                                <p class="font-bold px-5 py-1 truncate"><%= task.category.name %></p>
+                                <div class="flex items-center">
+                                    <%= link_to edit_task_path(task), class:"p-3 text-xl flex items-center hover:bg-teal-500 hover:text-white transition-all duration-150 ease", remote: true, 'data-modal-toggle' => 'defaultModal' do %>
+                                        <i class='bx bxs-edit'></i>
+                                    <% end %>
+                                    <%= link_to task_path(task.id), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class:"p-3 text-xl flex items-center hover:bg-red-500 hover:text-white transition-all duration-150 ease" do %>
+                                        <i class='bx bxs-trash'></i>
+                                    <% end %>
+                                </div>
+                            </div>
+                            <%= link_to category_task_path(task.category_id, task), class:"", remote: true, 'data-modal-toggle' => 'defaultModal' do %>
+                                <div class="p-5">
+                                    <h1 class="font-extrabold text-xl mb-2 truncate"><%= task.name %></h1>
+                                    <p class="truncate"><%= task.body %></p>
+                                    
+                                </div>
+                            <% end %>
+                        </div>
+        
+                </div>
+            <% end %>
+        <% else %>
+            <div>
+                <div class="z-0 snap-start shrink-0 first:pl-8 md:first:pl-20 transition-all duration-150 ease ">
+                    <div class="shrink-0 w-80 h-40 rounded-lg p-5 border-dashed border-2 border-gray-400 flex justify-center items-center overflow-hidden">
+                        
+                        <p class="font-bold text-xl mb-2 mr-3 text-gray-400 truncate ">No tasks for today</p>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+    <div class="bg-gradient-to-l from-white w-8 md:w-20 absolute right-0 top-0 bottom-0 rounded-l-lg"></div>
+</div>
+
+<div class="flex items-center justify-between mr-8 md:mr-20 mt-5">
+    <%= link_to categories_path, class:"flex items-center w-max ml-8 md:ml-20 hover:opacity-80" do %>
+        <h1 class="font-extrabold text-4xl mb-2 mr-3">Categories</h1>
+        <p class="font-semibold text-gray-600 text-xs border-2 border-gray-600 hover:bg-gray-600 hover:text-white bg-white rounded-full px-4 py-1"><%= @categories.count %></p>
+        <box-icon type='solid' name='chevron-right'></box-icon>
+    <% end %>
+    <%= link_to new_category_path, remote: true, 'data-modal-toggle' => 'defaultModal' do %> 
+        <button class="btn-primary text-sm ">+ New</button>
+    <% end %>
+</div>
+
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 pt-3 pb-14 px-8 md:px-20 overflow-hidden">
+    <% if @categories.any? %>
+        <% @categories.each do |category| %>
+        <div class="rounded-lg shadow-md border border-gray-300 bg-white overflow-hidden flex items-center">
+            <%= link_to category_path(category), class:"p-5 overflow-hidden w-full hover:bg-gray-100 active:bg-gray-200 transition-all duration-150 ease" do %>
+                <p class="text-lg truncate overflow-hidden"><%= category.name %></p>
+            <% end %>
+            <%= link_to new_category_task_path(category), class:"p-5 flex items-center justify-center overflow-hidden border-l-2 text-xl h-full hover:bg-green-100 hover:text-green-900 transition-all duration-150 ease", remote: true, 'data-modal-toggle' => 'defaultModal' do %>
+                <i class='bx bx-plus' ></i>
+            <% end %>
+        </div>
+        <% end %>
+    <% else %>
+        <div class="rounded-lg border-dashed border-2 border-gray-400 p-5 w-80 bg-white overflow-hidden ease flex justify-center items-center">
+            <p class="font-bold text-xl text-gray-400">No categories</p>
+        </div>
+    <% end %>
+</div>
+
+
+
+<%= link_to all_path, class:"flex items-center w-max ml-8 md:ml-20 mt-5 hover:opacity-80" do %>
+    <h1 class="font-extrabold text-4xl mb-2 mr-3">All Tasks</h1>
+    <p class="font-semibold text-teal-600 text-xs border-2 border-teal-600 hover:bg-teal-600 hover:text-white bg-white rounded-full px-4 py-1"><%= @all_tasks.count %></p>
+    <box-icon type='solid' name='chevron-right'></box-icon>
+<% end %>
+
+<div class="relative rounded-xl overflow-auto z-0">
+    <div class="bg-gradient-to-r from-white w-8 md:w-20 absolute left-0 top-0 bottom-0 rounded-l-lg z-10"></div>
+    <div class="w-full flex gap-8 snap-x scroll-pl-8 md:scroll-pl-20 overflow-x-auto pt-3 pb-14 z-0">
+        <% if @all_tasks.any? %>
+            <% @all_tasks.each do |task| %>
+                <div class="deleteTask<%= task.id %> z-0 snap-start shrink-0 first:pl-8 md:first:pl-20 last:pr-[calc(100%-21.5rem)] hover:opacity-90 active:opacity-70 transition-all duration-150 ease">
+                        <div class="shrink-0 w-80 h-40 rounded-lg shadow-xl bg-teal-100 flex flex-col overflow-hidden ">
+                            <div class="bg-teal-200 text-teal-600 flex items-center justify-between overflow-hidden">
+                                <div class=" px-5 py-1 overflow-hidden">
+                                    <p class="font-bold truncate"><%= task.category.name %></p>
+                                    <p class="font-light text-xs"><%= task.task_date %></p>
+                                </div>
+                                <div class="flex items-center h-full">
+                                    <%= link_to edit_task_path(task), class:"p-3 h-full text-xl flex items-center hover:bg-teal-500 hover:text-white transition-all duration-150 ease", remote: true, 'data-modal-toggle' => 'defaultModal' do %>
+                                        <i class='bx bxs-edit'></i>
+                                    <% end %>
+                                    <%= link_to task_path(task.id), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class:"p-3 h-full text-xl flex items-center hover:bg-red-500 hover:text-white transition-all duration-150 ease" do %>
+                                        <i class='bx bxs-trash'></i>
+                                    <% end %>
+                                </div>
+                            </div>
+                            <%= link_to category_task_path(task.category_id, task), class:"", remote: true, 'data-modal-toggle' => 'defaultModal' do %>
+                                <div class="p-5">
+                                    <h1 class="font-extrabold text-xl mb-2 truncate"><%= task.name %></h1>
+                                    <p class="truncate"><%= task.body %></p>
+                                    
+                                </div>
+                            <% end %>
+                        </div>
+        
+                </div>
+            <% end %>
+        <% else %>
+            <div>
+                <div class="z-0 snap-start shrink-0 first:pl-8 md:first:pl-20 transition-all duration-150 ease ">
+                    <div class="shrink-0 w-80 h-40 rounded-lg p-5 border-dashed border-2 border-gray-400 flex justify-center items-center overflow-hidden">
+                        <p class="font-bold text-xl mb-2 mr-3 text-gray-400 truncate ">No tasks</p>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+    </div>
+    <div class="bg-gradient-to-l from-white w-8 md:w-20 absolute right-0 top-0 bottom-0 rounded-l-lg"></div>
+</div>

@@ -1,0 +1,27 @@
+<%= form_with(model: article, local: false) do |f| %>
+
+    <p>
+        <% if article.errors.any? %>
+            <ul id='article-errors'>
+                <% article.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        <% end %>
+    </p>
+
+    <p>
+        <%= f.label :name %> <br/>
+        <%= f.text_field :name %>
+    </p>
+
+    <p>
+        <%= f.label :body %>
+        <%= f.text_field :body %>
+    </p>
+
+    <p>
+        <%= f.submit %>
+    </p>
+
+<% end %>
