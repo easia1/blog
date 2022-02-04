@@ -25,7 +25,7 @@ Things you may want to cover:
 
 # Task'd 📝
 
-A stock market app made using Ruby on Rails that allows the user to buy and sell stocks
+
 
 <!-- Live demo [_here_](http://stokmarkt.herokuapp.com/). -->
 
@@ -37,16 +37,7 @@ A stock market app made using Ruby on Rails that allows the user to buy and sell
 
 ## Features
 
--   Admin accounts
-    -   Approve or reject users 
-    -   View, add, edit, and delete users
--   Users (Traders)
-    -   Add balance to their account
-    -   View their portfolio
-    -   Search for companies/stocks
-    -   See the top 10 trending stocks
-    -   Buy and sell stocks
-    -   View their own transaction history
+-   
 
 <!--
 ## Getting Started
