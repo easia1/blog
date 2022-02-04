@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, :path => '', :path_names => { :sign_in => "login", :sign_out => "logout", :sign_up => "register" }
+  # devise_for :users, :path => '', :path_names => { :sign_in => "login", :sign_out => "logout", :sign_up => "register" }
   resources :categories do
     resources :tasks,  only: [:index, :show, :new, :create]
   end
@@ -20,19 +20,19 @@ Rails.application.routes.draw do
   # # Added delete route
   # delete '/articles/:id' => 'articles#destroy', as: 'delete_article'
   
-  resources :articles do
-    resources :comments
-  end
+  # resources :articles do
+  #   resources :comments
+  # end
   
-  devise_scope :user do
-    authenticated :user do
-      root :to => 'categories#home', as: :authenticated_root
-    end
+  # devise_scope :user do
+  #   authenticated :user do
+  #     root :to => 'categories#home', as: :authenticated_root
+  #   end
   
-    unauthenticated do
-      root 'devise/sessions#new', as: :unauthenticated_root
-    end
-  end
+  #   unauthenticated do
+  #     root 'devise/sessions#new', as: :unauthenticated_root
+  #   end
+  # end
 
 
   # root "login"
