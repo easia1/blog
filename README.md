@@ -25,7 +25,7 @@ Things you may want to cover:
 
 # Task'd 📝
 
-
+A to-do app made using Ruby on Rails that helps users organize their tasks into different categories
 
 <!-- Live demo [_here_](http://stokmarkt.herokuapp.com/). -->
 
@@ -37,7 +37,11 @@ Things you may want to cover:
 
 ## Features
 
--   
+-   Account registration and login
+-   Create, edit, and delete categories
+-   Create tasks within categories
+-   View, edit, and delete tasks
+-   See tasks for today
 
 <!--
 ## Getting Started
