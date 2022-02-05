@@ -1,10 +1,10 @@
 class CreateAccounts < ActiveRecord::Migration[6.1]
   def change
-    create_table :accounts do |t|
-      t.string :name
-      t.text :location
+    # create_table :accounts do |t|
+    #   t.string :name
+    #   t.text :location
 
-      t.timestamps
-    end
+    #   t.timestamps
+    # end
   end
 end
