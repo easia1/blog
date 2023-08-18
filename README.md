@@ -27,7 +27,7 @@ Things you may want to cover:
 
 A to-do app made using Ruby on Rails that helps users organize their tasks into different categories
 
-Live demo [_here_](http://taskd-app.herokuapp.com/).
+~~Live demo [_here_](http://taskd-app.herokuapp.com/).~~
 
 Demo account:
 - Email: test@test.com
